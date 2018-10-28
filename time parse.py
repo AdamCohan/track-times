@@ -5,7 +5,7 @@ import random
 
 '''
 TO DO
-* finish coding for making meanlist
+* figure out why meanpercenterror is always about -1.45%
 * mess around and figure out right numbers for samplesize and numsamples
 * round the mean
 '''
@@ -29,24 +29,31 @@ for x in range(len(times.m200)):
     acc += times.m200[x]
 mean = acc / (len(times.m200) + 1)
 
-#this is the list where all the different averages will be appended to
-#once this is done and samplesize and numsamples are decided it gets copied to sheets and graphed
-meanlist = []
-
-#these are here and isolated so they can be modified pretty easily
-samplesize = 10
-numsamples = 100
+meanlist = [] #where all the averages are appended to
+sampleacc = 0 #accumulates all the random times
+meanval = 0 #a mean time that gets added to meanlist
+samplesize = 100 #size of a sample (n)
+numsamples = 100 #number of samples
 
 #do this bit (working out sample size and number of samples for mean distribution)
 #append each one to meanlist
 for i in range(numsamples):
     for i in range(samplesize):
-        break
-    break
+        x = random.randint(0,len(times.m200)-1)
+        sampleacc += int(times.m200[x])
+    meanval = sampleacc / samplesize
+    meanlist.append(meanval)
+    sampleacc = 0
 
+meanlistcum = 0
+meanlistavg = 0
+for i in range(len(meanlist)):
+    meanlistcum += meanlist[i]
+    meanlistavg = meanlistcum / len(meanlist)
+
+meanpercenterror = (meanlistavg - mean) / mean
 #all the garbage I print
 print(meanlist) #the list that will have the items for the sample mean distribution (normal)
-print('mean: ' + str(mean)) #the mean --> round to 2 decimals
-for i in range(len(times.m200)): #prints all the times
-    print(times.m200[i])
-print(timefreqdict) #all the frequencies of the different times
+print('actual mean: ' + str(mean)) #the mean --> round to 2 decimals
+print('sample mean: ' + str(meanlistavg)) #the mean of the sample mean distribution
+print('percent error: ' + str(meanpercenterror * 100) + '%')
