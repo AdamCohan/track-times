@@ -39,8 +39,7 @@ meanval = 0 #a mean time that gets added to meanlist
 samplesize = 20 #size of a sample (n)
 numsamples = 1000 #number of samples
 
-#do this bit (working out sample size and number of samples for mean distribution)
-#append each one to meanlist
+#takes a number of samples of n size, averages each sample, then appends to meanlist
 for i in range(numsamples):
     for i in range(samplesize):
         x = random.randint(0,len(times.m200) - 1)
@@ -62,4 +61,4 @@ meanpercenterror = (meanlistavg - mean) / mean
 #print(meanlist) #the list that will have the items for the sample mean distribution (normal)
 print('actual mean: ' + str(round(mean, 5))) #the mean
 print('sample mean: ' + str(round(meanlistavg, 5))) #the mean of the sample mean distribution
-print('percent error: ' + str(meanpercenterror * 100) + '%') #the percent error of the mean
+print('percent error: ' + str(round((meanpercenterror * 100), 5)) + '%') #the percent error of the mean
