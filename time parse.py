@@ -5,7 +5,12 @@ import random
 
 '''
 TO DO
+* do all printing stuff for 100m
 * mess around and figure out right numbers for samplesize and numsamples
+* try make a function that goes through different values of samplesize and numsamples and compares how normal they are
+* comparison is done with 68-95-99.7 rule, how skewed it is, and if it actually fits the normal curve
+* do r^2
+* HAVE FORMULA FOR R^2 AND NORMAL CURVE --> NEED FORMULA BASED ON MEANLIST TO USE
 '''
 
 #testlist = [0,1,2,3,4,5,6,7,8,9]
@@ -14,7 +19,7 @@ TO DO
 #timefreqdict is a dictionary with all the times and their counts
 #turned into a function that can be called for any list
 def getFreqDict(list_):
-    freqdict = {}
+    timefreqdict = {}
     for i in range(len(list_)):
         try:
             a = timefreqdict[str(list_[i])]
@@ -22,7 +27,7 @@ def getFreqDict(list_):
             timefreqdict[str(list_[i])] = a
         except KeyError:
             timefreqdict[str(list_[i])] = 1
-    return freqdict
+    return timefreqdict
 
 #takes a number of samples of n size, averages each sample, then appends to meanlist
 #turned into a function (n = samplesize; sampcount = numsamples)
@@ -87,6 +92,20 @@ def checkSkew(list_):
     mean = getMean(list_)
     return 'the mean is ' + str(round(mean, 3)) + ' and the median is ' + str(med)
 
+#returns all of the averages and their frequencies
+#basically regress this with the normal curve formula, and check if sigma and mu properly line up
+def getHistMaxes(list_):
+    freqdict = getFreqDict(list_)
+    histvals = []
+    histmax = []
+    for k in freqdict:
+        histvals.append(k)
+    histvals.sort()
+    for i in histvals:
+        histmax.append(freqdict[i])
+    for i in range(len(histvals)):
+        print(histvals[i], histmax[i])
+
 samplesize = 20 #size of a sample (n)
 numsamples = 1000 #number of samples
 
@@ -97,11 +116,14 @@ m200mlavg = getMean(m200meanlist)
 '''
 all the garbage I print
 '''
-#print(m200meanlist) #the list that will have the items for the sample mean distribution (normal)
-#print('actual mean: ' + str(round(m200mean, 5))) #the mean
-#print('sample mean: ' + str(round(m200mlavg, 5))) #the mean of the sample mean distribution
-#print('percent error: ' + str(round((getPercError(m200mlavg, m200mean)), 5)) + '%') #the percent error of the mean
-print(testNormal(times.m200))
-print(checkSkew(times.m200))
-print(testNormal(m200meanlist))
-print(checkSkew(m200meanlist))
+# print(m200meanlist) #the list that will have the items for the sample mean distribution (normal)
+# print('actual mean: ' + str(round(m200mean, 5))) #the mean
+# print('sample mean: ' + str(round(m200mlavg, 5))) #the mean of the sample mean distribution
+# print('percent error: ' + str(round((getPercError(m200mlavg, m200mean)), 5)) + '%') #the percent error of the mean
+# print(testNormal(times.m200))
+# print(checkSkew(times.m200))
+# print(testNormal(m200meanlist))
+# print(checkSkew(m200meanlist))
+# for i in m200meanlist:
+#     print(i)
+getHistMaxes(m200meanlist)
