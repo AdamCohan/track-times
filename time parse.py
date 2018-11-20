@@ -106,8 +106,18 @@ def getHistMaxes(list_):
     for i in range(len(histvals)):
         print(histvals[i], histmax[i])
 
+def getTopX(timelist, namelist, c):
+    topxtimes = []
+    topxnames = []
+    for i in range(c):
+        topxtimes.append(timelist[i])
+        topxnames.append(namelist[i])
+    return topxtimes, topxnames
+
 samplesize = 20 #size of a sample (n)
 numsamples = 1000 #number of samples
+
+top20times100, top20names100 = getTopX(times.m100, times.norepeatnames100, 20)
 
 m200mean = getMean(times.m200)
 m200meanlist = getMeanlist(times.m200, samplesize, numsamples)
@@ -126,4 +136,8 @@ all the garbage I print
 # print(checkSkew(m200meanlist))
 # for i in m200meanlist:
 #     print(i)
-getHistMaxes(m200meanlist)
+# getHistMaxes(m200meanlist)
+
+print(getMean(top20times100))
+for i in range(len(top20times100)):
+    print(top20times100[i], top20names100[i])
