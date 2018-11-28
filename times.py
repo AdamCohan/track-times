@@ -10525,9 +10525,12 @@ m400old = [
 #I think it's more representative of the population
 m100 = []
 m200 = []
+m400 = []
 
 norepeatnames100 = []
 norepeatnames200 = []
+norepeatnames400 = []
 
 m100, norepeatnames100 = getNoRepLists(m100old, names.m100names)
 m200, norepeatnames200 = getNoRepLists(m200old, names.m200names)
+m400, norepeatnames400 = getNoRepLists(m400old, names.m400names)

@@ -118,6 +118,8 @@ samplesize = 20 #size of a sample (n)
 numsamples = 1000 #number of samples
 
 top20times100, top20names100 = getTopX(times.m100, times.norepeatnames100, 20)
+top20times200, top20names200 = getTopX(times.m200, times.norepeatnames200, 20)
+top20times400, top20names400 = getTopX(times.m400, times.norepeatnames400, 20)
 
 m200mean = getMean(times.m200)
 m200meanlist = getMeanlist(times.m200, samplesize, numsamples)
@@ -141,3 +143,11 @@ all the garbage I print
 print(getMean(top20times100))
 for i in range(len(top20times100)):
     print(top20times100[i], top20names100[i])
+
+print(getMean(top20times200))
+for i in range(len(top20times200)):
+    print(top20times200[i], top20names200[i])
+
+print(getMean(top20times400))
+for i in range(len(top20times400)):
+    print(top20times400[i], top20names400[i])
