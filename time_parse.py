@@ -14,7 +14,7 @@ TO DO
 
 ways to check if normal
 - 68-95-99.7 rule
-- 
+-
 '''
 
 #testlist = [0,1,2,3,4,5,6,7,8,9]
@@ -96,8 +96,15 @@ def checkSkew(list_):
     mean = getMean(list_)
     return 'the mean is ' + str(round(mean, 3)) + ' and the median is ' + str(med)
 
+def getWRzscore(list_):
+    mean = getMean(list_)
+    sd = getSD(list_)
+    zscore = (list_[0] - mean)/sd
+    return zscore
+
 #returns all of the averages and their frequencies
 #basically regress this with the normal curve formula, and check if sigma and mu properly line up
+#not really using this anymore
 def getHistMaxes(list_):
     freqdict = getFreqDict(list_)
     histvals = []
@@ -118,16 +125,18 @@ def getTopX(timelist, namelist, c):
         topxnames.append(namelist[i])
     return topxtimes, topxnames
 
+def listTopXZScore(timelist, norepnamelist, c):
+    for i in range(c-1):
+        topxracetimes, topxracenames = getTopX(timelist, norepnamelist, i + 2)
+        zscore = getWRzscore(topxracetimes)
+        print(zscore)
+
 samplesize = 20 #size of a sample (n)
 numsamples = 1000 #number of samples
 
-top20times100, top20names100 = getTopX(times.m100, times.norepeatnames100, 20)
-top20times200, top20names200 = getTopX(times.m200, times.norepeatnames200, 20)
-top20times400, top20names400 = getTopX(times.m400, times.norepeatnames400, 20)
-
-m200mean = getMean(times.m200)
-m200meanlist = getMeanlist(times.m200, samplesize, numsamples)
-m200mlavg = getMean(m200meanlist)
+# m200mean = getMean(times.m200)
+# m200meanlist = getMeanlist(times.m200, samplesize, numsamples)
+# m200mlavg = getMean(m200meanlist)
 
 '''
 all the garbage I print
@@ -144,14 +153,55 @@ all the garbage I print
 #     print(i)
 # getHistMaxes(m200meanlist)
 
-print(getMean(top20times100))
-for i in range(len(top20times100)):
-    print(top20times100[i], top20names100[i])
+# print(getMean(top20times100))
+# for i in range(len(top20times100)):
+#     print(top20times100[i], top20names100[i])
+#
+# print(getMean(top20times200))
+# for i in range(len(top20times200)):
+#     print(top20times200[i], top20names200[i])
+#
+# print(getMean(top20times400))
+# for i in range(len(top20times400)):
+#     print(top20times400[i], top20names400[i])
 
-print(getMean(top20times200))
-for i in range(len(top20times200)):
-    print(top20times200[i], top20names200[i])
+# print(getMean(times.m100), getSD(times.m100), getWRzscore(times.m100))
+# print(getMean(times.m200), getSD(times.m200), getWRzscore(times.m200))
+# print(getMean(times.m400), getSD(times.m400), getWRzscore(times.m400))
+# print(getMean(times.m800), getSD(times.m800), getWRzscore(times.m800))
+# print(getMean(times.m1500), getSD(times.m1500), getWRzscore(times.m1500))
 
-print(getMean(top20times400))
-for i in range(len(top20times400)):
-    print(top20times400[i], top20names400[i])
+# top20times100, top20names100 = getTopX(times.m100, times.norepeatnames100, 20)
+# top20times200, top20names200 = getTopX(times.m200, times.norepeatnames200, 20)
+# top20times400, top20names400 = getTopX(times.m400, times.norepeatnames400, 20)
+# top20times800, top20names800 = getTopX(times.m800, times.norepeatnames800, 20)
+# top20times1500, top20names1500 = getTopX(times.m1500, times.norepeatnames1500, 20)
+# top20times10000, top20names10000 = getTopX(times.m10000, times.norepeatnames10000, 20)
+#
+# print('100: ', getWRzscore(top20times100))
+# print('200: ', getWRzscore(top20times200))
+# print('400: ', getWRzscore(top20times400))
+# print('800: ', getWRzscore(top20times800))
+# print('1500: ', getWRzscore(top20times1500))
+# print('10000: ', getWRzscore(top20times10000))
+
+print('100m')
+listTopXZScore(times.m100, times.norepeatnames100, 50)
+print('\n')
+print('200m')
+listTopXZScore(times.m200, times.norepeatnames200, 50)
+print('\n')
+print('400m')
+listTopXZScore(times.m400, times.norepeatnames400, 50)
+print('\n')
+print('800m')
+listTopXZScore(times.m800, times.norepeatnames800, 50)
+print('\n')
+print('1500m')
+listTopXZScore(times.m1500, times.norepeatnames1500, 50)
+print('\n')
+print('5000m')
+listTopXZScore(times.m5000, times.norepeatnames5000, 50)
+print('\n')
+print('10000m')
+listTopXZScore(times.m10000, times.norepeatnames10000, 50)
